@@ -4,7 +4,6 @@ COPY package*.json /app/
 WORKDIR /app
 COPY . ./
 
-ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npm install -g pnpm
