@@ -7,7 +7,8 @@ COPY . ./
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm install
-RUN npm run build
+RUN npm install -g pnpm
+RUN pnpm i
+RUN pnpm build
 EXPOSE 3000
-CMD ["npm", "run","start"]
+CMD ["pnpm", "run","start"]
