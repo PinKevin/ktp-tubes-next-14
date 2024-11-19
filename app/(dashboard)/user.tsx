@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,8 +11,16 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 import { User as UserIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
-export async function User() {
+export function User() {
+  const router = useRouter();
+
+  function handleLogout() {
+    sessionStorage.removeItem('token');
+    router.push('/login');
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,7 +32,9 @@ export async function User() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href="/logout">Log Out</Link>
+          <Link href="/login" onClick={handleLogout}>
+            Log Out
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
