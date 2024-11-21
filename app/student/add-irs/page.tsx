@@ -76,7 +76,7 @@ export default function EnhancedStudentForm() {
     try {
       const token = await getTokenFromSession();
       if (!token) {
-        throw new Error('Anda belum login');
+        router.push('/login');
       }
 
       const formData = new FormData();
