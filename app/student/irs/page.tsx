@@ -1,23 +1,24 @@
 'use client';
 
+import IRSTable from './irs-table';
 import { getTokenFromSession } from '@/app/(helper)/check-token';
 import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function StudentDashboardPage() {
-  const [name, setName] = useState('');
-
+export default function StudentIRSPage() {
+  const [irsList, setIrsList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    async function getStudentInfo() {
+    async function getStudentIRS() {
       try {
         const token = await getTokenFromSession();
         if (!token) {
           redirect('/login');
         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/mahasiswa`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/irs`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -25,26 +26,24 @@ export default function StudentDashboardPage() {
         });
 
         if (!response.ok) {
-          throw new Error('Gagal mengambil info mahasiswa');
+          throw new Error('Pengambilan IRS gagal');
         }
 
         const data = await response.json();
-        console.log(data.nama);
-        setName(data.nama);
+        setIrsList(data);
       } catch (error) {
         console.error('Error:', error);
-        alert('Terjadi error saat mengambil data mahasiswa');
-        setName('Mahasiswa');
+        alert('Terjadi error saat mengambil IRS');
+        setIrsList([]);
+      } finally {
+        setLoading(false);
       }
     }
 
-    getStudentInfo();
+    getStudentIRS();
   }, [router]);
 
   return (
-    <>
-      <h1 className="text-5xl font-bold">Halo {name ?? 'Mahasiswa'}!</h1>
-      <h1 className="text-xl">Silakan tambahkan IRS Anda</h1>
-    </>
+    <div className="w-full px-4">{loading ? <p>Loading</p> : <IRSTable irsList={irsList} />}</div>
   );
 }

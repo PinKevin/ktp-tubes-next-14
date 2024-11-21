@@ -1,4 +1,4 @@
-import { FilePlus, Home } from 'lucide-react';
+import { File, FilePlus, Home } from 'lucide-react';
 import DashboardLayout from '../(dashboard)/dashboard-layout';
 import { NavItemType } from '../(dashboard)/nav-item-type';
 
@@ -9,7 +9,12 @@ const menuList: NavItemType[] = [
     icon: Home,
   },
   {
-    tooltip: 'Setujui IRS',
+    tooltip: 'Daftar IRS',
+    href: '/student/irs',
+    icon: File,
+  },
+  {
+    tooltip: 'Tambah IRS',
     href: '/student/add-irs',
     icon: FilePlus,
   },
