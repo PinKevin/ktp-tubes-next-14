@@ -20,7 +20,7 @@ export default function LoginPage() {
 
   async function processLogin(): Promise<{ token: string; role: string } | null> {
     try {
-      const response: Response = await fetch('http://34.101.164.162/api/auth/login', {
+      const response: Response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
